@@ -40,7 +40,7 @@ static double FindHypotenuse() {
     return hypotenuse;
 }
 
-static double findLeg() {
+static double FindLeg() {
 
     //hypotenuse input
     double hypotenuse;
@@ -85,46 +85,83 @@ int main() {
 
     const double pi = std::numbers::pi;
 
-    //menuChoice input
-    int menuChoice;
-    while (true){
-        std::cout << "-------" << "Welcome" << "-------" << '\n';
-        std::cout << "1: Calculate the hypotenuse" << '\n' << "2: Calculate the legs" << '\n';
-        std::cin >> menuChoice;
+    bool repeat = true;
 
-        if (std::cin.fail()) {
-            std::cout << "Invalid input, must be an integer" << '\n';
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
+    while (repeat == true) {
+
+        //menuChoice input
+        int menuChoice;
+        while (true){
+            std::cout << "-------" << "Welcome" << "-------" << '\n';
+            std::cout << "1: Calculate the hypotenuse" << '\n' << "2: Calculate the legs" << '\n';
+            std::cin >> menuChoice;
+
+            if (std::cin.fail()) {
+                std::cout << "Invalid input, must be an integer" << '\n';
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                continue;
+            }
+
+            if (menuChoice != 1 && menuChoice != 2) {
+                std::cout << "Please enter one of the listed options" << '\n';
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                continue;
+            }
+
+            break;
         }
 
-        if (menuChoice != 1 && menuChoice != 2) {
-            std::cout << "Please enter one of the listed options" << '\n';
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
+        double ans;
+        switch (menuChoice) {
+            case 1: {
+                ans = FindHypotenuse();
+                std::cout << ans << '\n';
+                break;
+            }
+            //invoking FindLeg method
+            case 2:
+                ans = FindLeg();
+                std::cout << ans << '\n';
+                break;
+
+            default:
+                std::cout << "Invalid choice" << '\n';
+                break;
         }
 
-        break;
+        while (true) {
+
+            std::cout << "Would you like to do another calculation (y/n): ";
+            std::string repeatInput;
+            std::cin >> repeatInput;
+
+            if (std::cin.fail()) {
+                std::cout << "Invalid, input must be a string" << '\n';
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                continue;
+            }
+
+            else if (repeatInput == "y" || repeatInput == "Y") {
+
+            }
+
+            else if (repeatInput == "n" || repeatInput == "N") {
+
+                repeat = false;
+            }
+
+            else {
+                std::cout << "Enter a listed option" << '\n';
+                continue;
+            }
+
+            break;
+        }
+
+
     }
-
-    double ans;
-    switch (menuChoice) {
-        case 1: {
-            ans = FindHypotenuse();
-            std::cout << ans;
-            break;
-        }
-        case 2:
-            ans = findLeg();
-            std::cout << ans;
-            break;
-
-        default:
-            std::cout << "Invalid choice" << '\n';
-            break;
-    }
-
     return 0;
 }
