@@ -2,7 +2,18 @@
 #include <cmath>
 #include <numbers>
 
+static double DegreesToRadians(double degrees) {
+    double radians = degrees * (std::numbers::pi/180);
+    return radians;
+}
+
+static double RadiansToDegrees(double radians) {
+    double degrees = radians * (180/std::numbers::pi);
+    return degrees;
+}
+
 static double FindHypotenuse() {
+
     //side1 input
     double side1;
     while (true) {
@@ -80,10 +91,116 @@ static double FindLeg() {
     return ans;
 }
 
+static void AngleBased() {
+
+    int angleBasedMenu;
+    while (true) {
+
+        std::cout << "------------------------" << '\n' << " Angle Based Calculator " << '\n' << "------------------------" << '\n';
+
+        std::cout << "1: Calculate an angle" << '\n' << "2: Calculate a side" << '\n';
+        std::cin >> angleBasedMenu;
+
+        if (std::cin.fail()) {
+            std::cout << "Invalid, input must be an integer" << '\n';
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
+
+        if (angleBasedMenu != 1 && angleBasedMenu != 2) {
+            std::cout << "Please enter a listed option" << '\n';
+            continue;
+        }
+
+        break;
+    }
+
+    switch (angleBasedMenu){
+
+        /*
+         * calculating an angle
+         * need at least two side accept only one as blank
+        */
+        case 1:
+
+            double opposite_side;
+            double adjacent_side;
+            double hypotenuse;
+
+            std::cout << "Please enter all length in the same units and input any unknown measurements as 0" << '\n';
+
+            //opposite_side input
+            while (true) {
+                std::cout << "Enter the length of the opposite side: ";
+                std::cin >> opposite_side;
+
+                if (std::cin.fail()) {
+                    std::cout << "Invalid, input an integer";
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    continue;
+                }
+                break;
+            }
+
+            //adjacent_side input
+            while (true) {
+                std::cout << "Enter the length of the adjacent side: ";
+                std::cin >> adjacent_side;
+
+                if (std::cin.fail()) {
+                    std::cout << "Invalid, input an integer";
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    continue;
+                }
+                break;
+            }
+
+            //hypotenuse input
+            while (true) {
+                std::cout << "Enter the length of the hypotenuse side: ";
+                std::cin >> hypotenuse;
+
+                if (std::cin.fail()) {
+                    std::cout << "Invalid, input an integer";
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    continue;
+                }
+                break;
+            }
+
+            if ((opposite_side == 0 && adjacent_side == 0 && hypotenuse ==0) || (opposite_side == 0 && adjacent_side == 0) || (opposite_side == 0 && hypotenuse == 0) || (adjacent_side == 0 && hypotenuse ==0)) {
+                std::cout << "Not enough information";
+            }
+
+            //sine
+            else if (opposite_side != 0 && hypotenuse != 0) {
+
+                double sine_angle = opposite_side/hypotenuse;
+                double angle = RadiansToDegrees(std::asin(sine_angle));
+                std::cout << "The angle is " << angle << "°" << '\n';
+            }
+
+            //cosine
+            else if (adjacent_side != 0 && hypotenuse != 0) {
+                std::cout << "Cosine under development";
+            }
+
+            //tangent
+            else if (opposite_side != 0 && adjacent_side != 0) {
+                std::cout << "Tangent under development";
+            }
+            // end of switch
+            break;
+
+        case 2:
+            std::cout << "Under development";
+}
 
 int main() {
-
-    const double pi = std::numbers::pi;
 
     bool repeat = true;
 
@@ -92,8 +209,9 @@ int main() {
         //menuChoice input
         int menuChoice;
         while (true){
-            std::cout << "-------" << "Welcome" << "-------" << '\n';
-            std::cout << "1: Calculate the hypotenuse" << '\n' << "2: Calculate the legs" << '\n';
+            std::cout << "----------------------------------------" << '\n' << " Welcome to the trigonometry calculator " << '\n' << "----------------------------------------" << '\n';
+            std::cout << "1: Calculate the hypotenuse" << '\n' << "2: Calculate the legs" << '\n' << "3: Calulate using an angle" << '\n';
+            std::cout << "----------------------------------------" << '\n';
             std::cin >> menuChoice;
 
             if (std::cin.fail()) {
@@ -103,7 +221,7 @@ int main() {
                 continue;
             }
 
-            if (menuChoice != 1 && menuChoice != 2) {
+            if (menuChoice != 1 && menuChoice != 2 && menuChoice != 3) {
                 std::cout << "Please enter one of the listed options" << '\n';
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -115,15 +233,20 @@ int main() {
 
         double ans;
         switch (menuChoice) {
-            case 1: {
+            case 1:
                 ans = FindHypotenuse();
                 std::cout << ans << '\n';
                 break;
-            }
+
             //invoking FindLeg method
             case 2:
                 ans = FindLeg();
                 std::cout << ans << '\n';
+                break;
+
+            //invoking AngleBased method
+            case 3:
+                AngleBased();
                 break;
 
             default:
