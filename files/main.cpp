@@ -179,19 +179,24 @@ static void AngleBased() {
             //sine
             else if (opposite_side != 0 && hypotenuse != 0) {
 
-                double sine_angle = opposite_side/hypotenuse;
-                double angle = RadiansToDegrees(std::asin(sine_angle));
+                double sin_angle = opposite_side/hypotenuse;
+                double angle = RadiansToDegrees(std::asin(sin_angle));
                 std::cout << "The angle is " << angle << "°" << '\n';
             }
 
             //cosine
             else if (adjacent_side != 0 && hypotenuse != 0) {
-                std::cout << "Cosine under development";
+                double cos_angle = adjacent_side/hypotenuse;
+                double angle = RadiansToDegrees(std::acos(cos_angle));
+                std::cout << "The angle is " << angle << "°" << '\n';
             }
 
             //tangent
             else if (opposite_side != 0 && adjacent_side != 0) {
                 std::cout << "Tangent under development";
+                double tan_angle = opposite_side/adjacent_side;
+                double angle = RadiansToDegrees(std::atan(tan_angle));
+                std::cout << "The angle is " << angle << "°" << '\n';
             }
             // end of switch
             break;
